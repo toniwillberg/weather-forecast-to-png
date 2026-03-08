@@ -230,12 +230,14 @@ class WFTP:
     def _draw_title(self, ax, city: str, time_str: str):
         """Draw title and timestamp"""
         ax.text(0.5, self.config.TITLE_Y, f"{city} WEATHER", 
-               ha='center', va='top', fontsize=self.config.TITLE_FONT_SIZE, 
-               fontweight='bold')
-        ax.text(0.95, self.config.TIME_Y, time_str, ha='right', va='top', 
-               fontsize=self.config.TIME_FONT_SIZE, color='gray')
+            ha='center', va='top', fontsize=self.config.TITLE_FONT_SIZE, 
+            fontweight='bold')
+        fetch_time = datetime.now()
+        ax.text(0.95, self.config.TIME_Y, fetch_time.strftime('%Y-%m-%d %H:%M'), 
+            ha='right', va='top', fontsize=self.config.TIME_FONT_SIZE * 0.5, 
+            color='gray', fontweight='normal')  # make it 50% smaller and normal weight
         ax.text(0.5, self.config.TABLE_HEADER_Y, '7-DAY FORECAST', 
-               ha='center', va='bottom', fontsize=22, fontweight='bold')
+            ha='center', va='bottom', fontsize=22, fontweight='bold')
     
     def _draw_forecast_table(self, ax, daily_data: dict):
         """Draw 7-day forecast table with alternating row colors"""
