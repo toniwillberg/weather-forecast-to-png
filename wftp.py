@@ -3,11 +3,7 @@
 
 # Dependencies:
 #
-# Ubuntu/APT:
-# sudo apt install python3-pip python3-matplotlib python3-requests python3-numpy
-#
-# Fedora/DNF:
-# sudo dnf install python3-pip python3-matplotlib python3-requests python3-numpy
+# python3-pip python3-matplotlib python3-requests python3-numpy imagemagick
 #
 # If something doesn't seem to work, update your system. If it still doesn't work, try to figure
 # out what dependency is missing from the list and let the developers know.
@@ -41,6 +37,7 @@ import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 import numpy as np
 from matplotlib.patches import Rectangle
+import subprocess
 
 # =============================================================================
 # CONFIGURATION
@@ -223,7 +220,8 @@ class WFTP:
         
         # Save plot
         fig.savefig(self.output, facecolor='white', dpi=self.config.DPI, 
-                bbox_inches='tight', pad_inches=0)
+                bbox_inches='tight', pad_inches=0, transparent=False)
+        subprocess.run(["convert", self.output, "-monochrome", "-depth", "8", self.output])
         plt.close(fig)
         gc.collect()
         
