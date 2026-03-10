@@ -220,8 +220,16 @@ class WFTP:
         
         # Save plot
         fig.savefig(self.output, facecolor='white', dpi=self.config.DPI, 
-                bbox_inches='tight', pad_inches=0, transparent=False)
-        subprocess.run(["convert", self.output, "-monochrome", "-depth", "8", self.output])
+                bbox_inches='tight', transparent=False, pad_inches=0)
+
+        # Resize the image to the desired dimensions
+        subprocess.run(["convert", self.output, 
+                    f"-resize", f"{self.config.DEVICE_WIDTH}x{self.config.DEVICE_HEIGHT}", 
+                    "-colorspace", "Gray", 
+                    "-colors", "16", 
+                    "-depth", "8", 
+                    self.output])
+                    
         plt.close(fig)
         gc.collect()
         
